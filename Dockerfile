@@ -1,4 +1,4 @@
-FROM node:5-slim
+FROM node:5
 MAINTAINER Arnau Siches <asiches@gmail.com>
 
 RUN apt-get update -qyy \
@@ -9,5 +9,5 @@ RUN apt-get update -qyy \
 RUN npm install -g mermaid phantomjs
 
 WORKDIR /data
-ENTRYPOINT ["mermaid"]
-CMD ["--help"]
+# ENTRYPOINT ["mermaid"]
+CMD ["mermaid", "--help"]
