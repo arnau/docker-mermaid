@@ -1,20 +1,21 @@
-.PHONY: build rmo rmi shell
-
 IMAGE ?= arnau/mermaid
 
-images = `docker images -qf 'dangling=true'`
+TASK = docker run -it --rm
 
-build :
+build:
 	docker build -t $(IMAGE) .
+.PHONY: build
 
-rmo :
-	docker rmi $$(docker images -qf 'dangling=true')
-
-rmi :
+rmi:
 	docker rmi $(app_image)
+.PHONY: rmi
 
-shell :
-	docker run -it --rm \
-		-w /data \
-		-v $$(pwd):/data $(IMAGE) \
-		bash
+shell:
+	@$(TASK) -v $(PWD):/data \
+           --entrypoint bash \
+           $(IMAGE)
+.PHONY: shell
+
+help:
+	@$(TASK) $(IMAGE)
+.PHONY: help

@@ -1,15 +1,13 @@
-FROM node:0.12
+FROM node:5-slim
 MAINTAINER Arnau Siches <asiches@gmail.com>
 
-# RUN apt-get update -qyy \
-#   && apt-get install -qyy \
-#     vim \
-#   && rm -rf /var/lib/apt/lists/*
-
-ENV TERM=xterm-256color
+RUN apt-get update -qyy \
+  && apt-get install -qyy \
+    bzip2 \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g mermaid phantomjs
 
-VOLUME /data
-
-CMD ["bash"]
+WORKDIR /data
+ENTRYPOINT ["mermaid"]
+CMD ["--help"]
