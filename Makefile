@@ -2,20 +2,27 @@ IMAGE ?= arnau/mermaid
 
 TASK = docker run -it --rm
 
+mermaid = $(TASK) -v $(PWD)/build:/build \
+                  -v $(PWD)/test:/data \
+                  $(IMAGE) mermaid
+
 build:
 	docker build -t $(IMAGE) .
 .PHONY: build
 
-rmi:
-	docker rmi $(app_image)
-.PHONY: rmi
+clean:
+	docker rmi $(IMAGE)
+.PHONY: clean
 
 shell:
 	@$(TASK) -v $(PWD):/data \
-           --entrypoint bash \
-           $(IMAGE)
+           $(IMAGE) bash
 .PHONY: shell
 
 help:
-	@$(TASK) $(IMAGE)
+	@$(mermaid) mermaid --help
 .PHONY: help
+
+test:
+	@$(mermaid) --png -o /data/ fixtures/sequence.mermaid
+.PHONY: test

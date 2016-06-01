@@ -9,5 +9,8 @@ RUN apt-get update -qyy \
 RUN npm install -g mermaid phantomjs
 
 WORKDIR /data
+
 # ENTRYPOINT ["mermaid"]
+# CMD ["--help"]
+
 CMD ["mermaid", "--help"]
